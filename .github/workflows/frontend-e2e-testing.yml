@@ -1,0 +1,29 @@
+name: Frontend e2e Testing
+
+on:
+  workflow_call:
+    inputs:
+      npm-version:
+        required: true
+        type: string
+
+
+jobs:
+  frontend-e2e-Testing:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Use Node ${{ inputs.npm-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ inputs.npm-version }}
+          cache: "npm"
+          cache-dependency-path: package-lock.json
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests
+        run: npm run test-ci
