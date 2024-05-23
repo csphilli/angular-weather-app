@@ -1,0 +1,20 @@
+<div class="search-bar-container">
+  <form>
+    <input
+      type="text"
+      [formControl]="searchInput"
+      placeholder="Enter city..."
+      name="searchBar"
+      id="searchInput"
+    />
+  </form>
+  <div class="search-results-container" *ngIf="cityLocations && cityLocations.length > 0">
+    <ul>
+      <li *ngFor="let cityLocation of cityLocations" (click)="onSelect(cityLocation)">
+        {{cityLocation.name}},
+        <ng-container *ngIf="cityLocation.state">{{cityLocation.state}},</ng-container>
+        {{cityLocation.country}}
+      </li>
+    </ul>
+  </div>
+</div>
