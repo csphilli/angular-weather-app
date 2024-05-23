@@ -1,10 +1,11 @@
 import { Component, HostListener, OnDestroy } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Subject, debounceTime, distinctUntilChanged, switchMap, takeUntil } from 'rxjs';
+import { Subject, catchError, debounceTime, distinctUntilChanged, of, switchMap, takeUntil } from 'rxjs';
 import { WeatherService } from '../../services/weather/weather.service';
 import { CityLocation } from '../../citylocation';
 import { NgFor, NgIf } from '@angular/common';
 import { CitySelectorService } from '../../services/citySelector/city-selector.service';
+import DOMPurify from 'dompurify';
 
 @Component({
   selector: 'app-search',
@@ -25,7 +26,7 @@ export class SearchComponent implements OnDestroy {
 
   clearFormAndCities() {
     this.searchInput.reset();
-    this.cityLocations = [];
+    this.cityLocations = null;
   }
 
   @HostListener('document:click', ['$event'])
@@ -42,21 +43,35 @@ export class SearchComponent implements OnDestroy {
 
  
   constructor(private weatherService: WeatherService, private citySelectorService: CitySelectorService) {
-    this.searchInput.valueChanges.pipe(
+    this.searchInput.valueChanges.
+    pipe(
       debounceTime(300),
       distinctUntilChanged(),
       switchMap((searchTerm: string) => {
         if (searchTerm !== null && searchTerm.trim()) {
-          return this.weatherService.getLocation(searchTerm).pipe(takeUntil(this.destroy$))
+          const sanitizedTerm = DOMPurify.sanitize(searchTerm)
+          return this.weatherService.getLocation(sanitizedTerm).
+          pipe(
+            takeUntil(this.destroy$),
+            catchError(err => {
+              console.error("error getting city locations:", err)
+              this.clearFormAndCities()
+              return of([])
+            })
+          )
         } else {
-          this.cityLocations = null;
-          return [];
+          this.clearFormAndCities();
+          return of([]);
         }
-        })
-      ).subscribe(
-      (data: CityLocation[]) => {
-        this.cityLocations = data;
+      })).
+    subscribe({
+      next: (data: CityLocation[]) => {
+        this.cityLocations = data
+      },
+      error: (err) => {
+        console.error("error getting city locations", err)
+        this.clearFormAndCities()
       }
-    )
+    })
   }
 }
