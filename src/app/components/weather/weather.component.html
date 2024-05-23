@@ -1,3 +1,65 @@
-<div class="weather-container" *ngIf="selectedCity !== null">
-	<p>{{selectedCity.name}}, {{selectedCity.lat}} by {{selectedCity.lon}}</p>
+<div class="card" *ngIf="weather !== null">
+	<div class="card-heading">
+		<h2>Weather Today in <em>{{selectedCity?.name}}, {{selectedCity?.country}}</em></h2>
+	</div>
+	<div class="card-content">
+		<div class="weather-emphasized">
+			<div class="emphasized-column">
+				<p>Feels Like</p>
+				<strong>{{weather.main.feels_like}}&deg;</strong>
+			</div>
+			<div class="emphasized-column">
+				<app-icon iconName={{weather.weather[0].icon}}></app-icon>
+				<h2>{{capitalizeWords(weather.weather[0].description)}}</h2>
+			</div>
+		</div>
+		<div class="weather-metrics">
+			<div class="metrics-column">
+				<div class="metrics-column__row">
+					<span>
+						<app-icon iconName="thermometer"></app-icon>
+						<p>High / Low</p>
+					</span>
+					<p>{{weather.main.temp_max}} / {{weather.main.temp_min}}</p>
+				</div>
+				<div class="metrics-column__row">
+					<span>
+						<app-icon iconName="humidity"></app-icon>
+						<p>Humidity</p>
+					</span>
+					<p>{{weather.main.humidity}}%</p>
+				</div>
+				<div class="metrics-column__row">
+					<span>
+						<app-icon iconName="pressure"></app-icon>
+						<p>Pressure</p>
+					</span>
+					<p>{{weather.main.pressure}} unit</p>
+				</div>
+			</div>
+			<div class="metrics-column">
+				<div class="metrics-column__row">
+					<span>
+						<app-icon iconName="sunrise"></app-icon>
+						<app-icon iconName="sunset"></app-icon>
+					</span>
+					<p>{{weather.sys.sunrise}} / {{weather.sys.sunset}}</p>
+				</div>
+				<div class="metrics-column__row">
+					<span>
+						<app-icon iconName="wind"></app-icon>
+						<p>Wind</p>
+					</span>
+					<p>{{weather.wind.speed}}</p>
+				</div>
+				<div class="metrics-column__row">
+					<span>
+						<app-icon iconName="visibility"></app-icon>
+						<p>Visibility</p>
+					</span>
+					<p>{{weather.visibility}}</p>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>

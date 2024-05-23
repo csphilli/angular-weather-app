@@ -5,19 +5,26 @@ import { Subject, Subscription, takeUntil } from 'rxjs';
 import { NgIf } from '@angular/common';
 import { WeatherService } from '../../services/weather/weather.service';
 import { WeatherInfo } from '../../weatherinfo';
+import { IconComponent } from '../icon/icon.component';
 
 @Component({
   selector: 'app-weather',
   standalone: true,
-  imports: [NgIf],
+  imports: [NgIf, IconComponent],
   templateUrl: './weather.component.html',
   styleUrl: './weather.component.scss'
 })
 export class WeatherComponent implements OnInit, OnDestroy {
   selectedCity: CityLocation | null = null
-  currentWeather: WeatherInfo | null = null
+  weather: WeatherInfo | null = null
   private destroy$: Subject<void> = new Subject()
   private citySubscription: Subscription = new Subscription
+
+  capitalizeWords(words: string): string {
+    return words.replace(/\b\w/g, function(char) {
+      return char.toUpperCase()
+    })
+  }
 
   ngOnInit(): void {
     this.citySubscription = this.citySelectorService.selectedCity$.subscribe({
@@ -27,7 +34,7 @@ export class WeatherComponent implements OnInit, OnDestroy {
           .pipe(takeUntil(this.destroy$))
           .subscribe({
             next: (weather: WeatherInfo) => {
-              this.currentWeather = weather
+              this.weather = weather
             },
             error: (err) => {
               console.error("Error fetching weather data:", err)

@@ -1,0 +1,40 @@
+.weather-emphasized {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	flex-grow: 1;
+	margin-bottom: 20px;
+
+	.emphasized-column {
+		strong {
+			font-size: 40px;
+			font-weight: 600;
+			font-family: "Montserrat";
+		}
+	}
+}
+
+.weather-metrics {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	
+	.metrics-column {
+		display: flex;
+		flex-direction: column;
+		gap: 15px;
+		width: 40%;
+
+		.metrics-column__row {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			border-bottom: 1px solid #ccc;
+
+			span {
+				display: flex;
+				align-items: center;
+			}
+		}
+	}
+}

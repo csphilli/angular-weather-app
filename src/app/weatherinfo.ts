@@ -45,7 +45,7 @@ interface sysType {
 
 export interface WeatherInfo {
 	coord: coordType
-	weather: weatherType
+	weather: weatherType[]
 	main: mainType
 	visibility: number
 	wind: windType
