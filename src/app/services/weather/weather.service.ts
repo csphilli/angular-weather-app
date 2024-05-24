@@ -12,19 +12,13 @@ export class WeatherService {
   private geoCodeBaseApiUrl = 'http://api.openweathermap.org/geo/1.0/direct?q=';
   private searchLimit = 10;
 
-  getWeather(lat: number, lon: number): Observable<WeatherInfo> {
-    const url = `${this.weatherBaseApiUrl}lat=${lat}&lon=${lon}&appid=${process.env['OPEN_WEATHER_ORG_API_KEY']}`
+  getWeather(lat: number, lon: number, unit: string): Observable<WeatherInfo> {
+    const url = `${this.weatherBaseApiUrl}lat=${lat}&lon=${lon}&units=${unit}&appid=${process.env['OPEN_WEATHER_ORG_API_KEY']}`
     return this.http.get<WeatherInfo>(url)
   }
 
   getLocation(searchTerm: string): Observable<CityLocation[]> {
     const url = `${this.geoCodeBaseApiUrl}${searchTerm}&limit=${this.searchLimit}&appid=${process.env['OPEN_WEATHER_ORG_API_KEY']}`
-    return this.http.get<CityLocation[]>(url)
-  }
-
-  // TODO: Remove before submitting
-  getLocationTest(searchTerm: string): Observable<CityLocation[]> {
-    const url = "http://localhost:3000/cities"
     return this.http.get<CityLocation[]>(url)
   }
 

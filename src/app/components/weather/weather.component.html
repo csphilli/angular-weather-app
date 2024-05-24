@@ -1,12 +1,12 @@
 <div class="card" *ngIf="weather !== null">
 	<div class="card-heading">
-		<h2>Weather Today in <em>{{selectedCity?.name}}, {{selectedCity?.country}}</em></h2>
+		<h2>Weather Today in <em>{{selectedCity.name}}, {{selectedCity.country}}</em></h2>
 	</div>
 	<div class="card-content">
 		<div class="weather-emphasized">
 			<div class="emphasized-column">
 				<p>Feels Like</p>
-				<strong>{{weather.main.feels_like}}&deg;</strong>
+				<strong>{{convertToDecimal(weather.main.feels_like, 0)}}{{degreeUnit}}</strong>
 			</div>
 			<div class="emphasized-column">
 				<app-icon iconName={{weather.weather[0].icon}}></app-icon>
@@ -20,7 +20,7 @@
 						<app-icon iconName="thermometer"></app-icon>
 						<p>High / Low</p>
 					</span>
-					<p>{{weather.main.temp_max}} / {{weather.main.temp_min}}</p>
+					<p>{{convertToDecimal(weather.main.temp_max, 0)}}{{degreeUnit}} / {{convertToDecimal(weather.main.temp_min, 0)}}{{degreeUnit}}</p>
 				</div>
 				<div class="metrics-column__row">
 					<span>
@@ -34,7 +34,7 @@
 						<app-icon iconName="pressure"></app-icon>
 						<p>Pressure</p>
 					</span>
-					<p>{{weather.main.pressure}} unit</p>
+					<p>{{weather.main.pressure}} hPa</p>
 				</div>
 			</div>
 			<div class="metrics-column">
@@ -43,21 +43,21 @@
 						<app-icon iconName="sunrise"></app-icon>
 						<app-icon iconName="sunset"></app-icon>
 					</span>
-					<p>{{weather.sys.sunrise}} / {{weather.sys.sunset}}</p>
+					<p>{{convertEpochTime(weather.sys.sunrise + weather.timezone)}} / {{convertEpochTime(weather.sys.sunset + weather.timezone)}}</p>
 				</div>
 				<div class="metrics-column__row">
 					<span>
 						<app-icon iconName="wind"></app-icon>
 						<p>Wind</p>
 					</span>
-					<p>{{weather.wind.speed}}</p>
+					<p>{{getWindDirection(weather.wind.deg)}} {{weather.wind.speed}} {{getWindSpeedUnit()}}</p>
 				</div>
 				<div class="metrics-column__row">
 					<span>
 						<app-icon iconName="visibility"></app-icon>
 						<p>Visibility</p>
 					</span>
-					<p>{{weather.visibility}}</p>
+					<p>{{convertToDecimal(weather.visibility / 1000, 2)}} km</p>
 				</div>
 			</div>
 		</div>

@@ -29,6 +29,7 @@
     "@angular/compiler-cli": "^17.3.0",
     "@types/jasmine": "~5.1.0",
     "@types/node": "^20.12.12",
+    "dayjs": "^1.11.11",
     "dotenv-webpack": "^8.1.0",
     "jasmine-core": "~5.1.0",
     "karma": "~6.4.0",

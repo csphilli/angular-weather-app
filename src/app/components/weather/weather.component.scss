@@ -24,6 +24,7 @@
 		flex-direction: column;
 		gap: 15px;
 		width: 40%;
+		padding: 5px 0px;
 
 		.metrics-column__row {
 			display: flex;
@@ -36,5 +37,26 @@
 				align-items: center;
 			}
 		}
+	}
+}
+
+@media screen and (max-width: 625px) {
+	.weather-emphasized {
+		margin-bottom: 50px;
+	}
+
+	.weather-metrics {
+		flex-direction: column;
+
+		.metrics-column {
+			width: 100%;
+		}
+	}
+}
+
+@media screen and (max-width: 400px) {
+	.weather-emphasized {
+		flex-direction: column;
+		gap: 20px;
 	}
 }
