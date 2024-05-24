@@ -5,7 +5,7 @@ import { WeatherService } from '../../services/weather/weather.service';
 import { CityLocation } from '../../citylocation';
 import { NgFor, NgIf } from '@angular/common';
 import { CitySelectorService } from '../../services/citySelector/city-selector.service';
-import DOMPurify from 'dompurify';
+import { SanitizationService } from '../../services/sanitization/sanitization.service';
 
 @Component({
   selector: 'app-search',
@@ -42,15 +42,18 @@ export class SearchComponent implements OnDestroy {
   }
 
  
-  constructor(private weatherService: WeatherService, private citySelectorService: CitySelectorService) {
+  constructor(
+    private weatherService: WeatherService,
+    private citySelectorService: CitySelectorService,
+    private sanitizationService: SanitizationService) {
     this.searchInput.valueChanges.
     pipe(
       debounceTime(300),
       distinctUntilChanged(),
       switchMap((searchTerm: string) => {
         if (searchTerm !== null && searchTerm.trim()) {
-          const sanitizedTerm = DOMPurify.sanitize(searchTerm)
-          return this.weatherService.getLocation(sanitizedTerm).
+          const cleaned = this.sanitizationService.sanitizeHtml(searchTerm)
+          return this.weatherService.getLocation(cleaned).
           pipe(
             takeUntil(this.destroy$),
             catchError(err => {

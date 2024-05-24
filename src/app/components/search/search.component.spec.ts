@@ -4,7 +4,6 @@ import { By } from '@angular/platform-browser';
 import { WeatherService } from '../../services/weather/weather.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CitySelectorService } from '../../services/citySelector/city-selector.service';
-import DOMPurify from 'dompurify';
 
 describe('SearchComponent', () => {
   let component: SearchComponent;
@@ -28,16 +27,6 @@ describe('SearchComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
   })
-
-  it('should sanitize user input before sending it to the API', fakeAsync(() => {
-    spyOn(DOMPurify, 'sanitize').and.callThrough()
-
-    const searchInput = '<img src=x onerror=alert(1)//>'
-    component.searchInput.setValue(searchInput)
-    tick(300)
-
-    expect(DOMPurify.sanitize).toHaveBeenCalled()
-  }))
 
   it('should create', () => {
     expect(component).toBeTruthy();

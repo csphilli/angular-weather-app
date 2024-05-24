@@ -3,3 +3,26 @@
 	margin: 0;
 	padding: 0;
 }
+
+h1, h2, h3, h4 {
+	font-family: "Montserrat", sans-serif;
+}
+
+p, li {
+	font-family: "Roboto", sans-serif;
+}
+
+.card {
+	background-color: #ececec;
+	border-radius: 10px;
+	padding: 15px;
+	position: relative;
+
+	.card-heading {
+		margin-bottom: 15px;
+	}
+
+	.card-content {
+		padding: 15px;
+	}
+}

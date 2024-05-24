@@ -22,6 +22,7 @@ export class WeatherService {
     return this.http.get<CityLocation[]>(url)
   }
 
+  // TODO: Remove before submitting
   getLocationTest(searchTerm: string): Observable<CityLocation[]> {
     const url = "http://localhost:3000/cities"
     return this.http.get<CityLocation[]>(url)

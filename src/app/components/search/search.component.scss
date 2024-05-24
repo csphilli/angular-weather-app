@@ -9,23 +9,33 @@
 		width: 100%;
 
 		input {
-			background-color: rgb(236, 236, 236);
+			background-color: #ececec;
 			width: 100%;
 			height: 45px;
 			padding: 5px 10px;
 			border-radius: 25px;
 			font-size: 16px;
+			border: none;
+		}
+
+		input:focus {
+			outline-color: #1a62b4;
 		}
 	
 	}
 }
 
 .search-results-container {
+	background-color: #ececec;
+	border-bottom-left-radius: 15px;
+	border-bottom-right-radius: 15px;
 	position: absolute;
-	bottom: 0;
+	bottom: -2px;
+
 	left: 25px;
 	width: 300px;
 	transform: translateY(100%);
+	overflow: hidden;
 
 	ul {
 		display: flex;
@@ -45,6 +55,7 @@
 
 		li:hover {
 			cursor: pointer;
+			background-color: #cfebff;
 		}
 	}
 }
