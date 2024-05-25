@@ -1,16 +1,16 @@
-import { TestBed } from '@angular/core/testing';
+import { TestBed } from "@angular/core/testing"
 
-import { CitySelectorService } from './city-selector.service';
+import { CitySelectorService } from "./city-selector.service"
 
-describe('CitySelectorService', () => {
-  let service: CitySelectorService;
+describe("CitySelectorService", () => {
+	let service: CitySelectorService
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(CitySelectorService);
-  });
+	beforeEach(() => {
+		TestBed.configureTestingModule({})
+		service = TestBed.inject(CitySelectorService)
+	})
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
-  });
-});
+	it("should be created", () => {
+		expect(service).toBeTruthy()
+	})
+})

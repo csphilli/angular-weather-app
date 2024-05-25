@@ -32,8 +32,8 @@ interface cloudType {
 }
 
 interface intervalType {
-	'1h'?: number
-	'3h'?: number
+	"1h"?: number
+	"3h"?: number
 }
 
 interface sysType {
