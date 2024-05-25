@@ -8,4 +8,10 @@
 		margin: 0 auto;
 		padding: 20px 40px;
 	}
+
+	@media screen and (max-width: 625px) {
+		.app-inner-container {
+			padding: 5px 10px;
+		}
+	}
 }
