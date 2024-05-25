@@ -1,0 +1,10 @@
+name: Main branch workflow
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  call-frontend-workflow:
+    uses: ./.github/workflows/frontend-workflow.yml
