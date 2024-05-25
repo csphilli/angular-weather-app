@@ -1,0 +1,28 @@
+name: Frontend Format Check
+
+on:
+  workflow_call:
+    inputs:
+      npm-version:
+        required: true
+        type: string
+
+jobs:
+  frontend-format-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Use Node ${{ inputs.npm-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ inputs.npm-version }}
+          cache: "npm"
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Run formatter
+        run: npm run format 
+
+      - name: Check that there are no changes
+        run: git diff --exit-code
