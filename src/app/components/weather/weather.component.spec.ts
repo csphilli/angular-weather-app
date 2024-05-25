@@ -52,16 +52,41 @@ describe('WeatherComponent', () => {
     expect(weatherService.getWeather).toHaveBeenCalledWith(city[0].lat, city[0].lon, unit)
   })
 
-  it('should have the required weather metrics', () => {
-    expect(fixture.debugElement.query(By.css("[data-test='weather-heading']"))).toBeTruthy()
-    expect(fixture.debugElement.query(By.css("[data-test='feels-like']"))).toBeTruthy()
-    expect(fixture.debugElement.query(By.css("[data-test='weather-description']"))).toBeTruthy()
-    expect(fixture.debugElement.query(By.css("[data-test='hi-low-temps']"))).toBeTruthy()
-    expect(fixture.debugElement.query(By.css("[data-test='humidity']"))).toBeTruthy()
-    expect(fixture.debugElement.query(By.css("[data-test='pressure']"))).toBeTruthy()
-    expect(fixture.debugElement.query(By.css("[data-test='sunrise-sunset-times']"))).toBeTruthy()
-    expect(fixture.debugElement.query(By.css("[data-test='wind-speed']"))).toBeTruthy()
-    expect(fixture.debugElement.query(By.css("[data-test='visibility']"))).toBeTruthy()
+  it('should have the required weather metrics and correct values', () => {
+
+    const dataTestTags = [
+      'weather-description',
+      'hi-low-temps',
+      'humidity',
+      'pressure',
+      'sunrise-sunset-times',
+      'wind-speed',
+      'visibility'
+    ]
+
+    interface ExpectedTagsToValues {
+      [key: string]: string
+    }
+
+    const expectedTagsToValues: ExpectedTagsToValues = {
+      "weather-description-value": "Clear Sky",
+      "hi-low-temps-value": "25°C / 18°C",
+      "humidity-value": "69%",
+      "pressure-value": "1009 hPa",
+      "sunrise-sunset-times-value": "4:20 AM / 10:16 PM",
+      "wind-speed-value": "SE 1.34 m/s",
+      "visibility-value": "10 km"
+    }
+
+    dataTestTags.forEach(tag => {
+      const element = fixture.debugElement.query(By.css(`[data-test='${tag}']`))
+      expect(element).toBeTruthy()
+
+      const valueTag = `${tag}-value`
+      const value = fixture.debugElement.query(By.css(`[data-test='${valueTag}']`))
+      expect(value).toBeTruthy()
+      expect(value.nativeElement.textContent).toEqual(expectedTagsToValues[valueTag])
+    })
   })
 
   it('should convert a value to specified number of decimal places', () => {

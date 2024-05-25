@@ -1,6 +1,5 @@
 import { CityLocation } from "../../citylocation";
 export const mockCityData: CityLocation[] = [
-
 	{
 		name: "Helsinki",
 		lat: 60.1674881,

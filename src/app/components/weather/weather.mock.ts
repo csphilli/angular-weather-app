@@ -23,8 +23,8 @@ export const mockWeatherData: WeatherInfo = {
 	},
 	visibility: 10000,
 	wind: {
-			speed: 2.57,
-			deg: 220
+			speed: 1.34,
+			deg: 328
 	},
 	clouds: {
 			all: 0
@@ -34,8 +34,8 @@ export const mockWeatherData: WeatherInfo = {
 			type: 2,
 			id: 2036194,
 			country: "FI",
-			sunrise: 1716599958,
-			sunset: 1716664529
+			sunrise: 1716600006,
+			sunset: 1716664615
 	},
 	timezone: 10800,
 	id: 658225,

@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, tick, waitForAsync } from '@angular/core/testing';
 import { SearchComponent } from './search.component';
 import { By } from '@angular/platform-browser';
 import { WeatherService } from '../../services/weather/weather.service';
@@ -6,14 +6,15 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CitySelectorService } from '../../services/citySelector/city-selector.service';
 import { mockCityData } from '../weather/citydata.mock';
 import { of } from 'rxjs';
+import { mockWeatherData } from '../weather/weather.mock';
 
 describe('SearchComponent', () => {
   let component: SearchComponent;
   let fixture: ComponentFixture<SearchComponent>;
-  let weatherService: jasmine.SpyObj<WeatherService>
+  let weatherServiceSpy: jasmine.SpyObj<WeatherService>
 
   beforeEach(async () => {
-    const weatherServiceSpy = jasmine.createSpyObj('WeatherService', ['getLocation'])
+    weatherServiceSpy = jasmine.createSpyObj('WeatherService', ['getLocation', 'getWeather'])
 
     await TestBed.configureTestingModule({
       imports: [ReactiveFormsModule, SearchComponent],
@@ -26,14 +27,13 @@ describe('SearchComponent', () => {
 
     fixture = TestBed.createComponent(SearchComponent)
     component = fixture.componentInstance
-    weatherService = TestBed.inject(WeatherService) as jasmine.SpyObj<WeatherService>
+    weatherServiceSpy = TestBed.inject(WeatherService) as jasmine.SpyObj<WeatherService>
+    weatherServiceSpy.getLocation.and.returnValue(of(mockCityData))
+    weatherServiceSpy.getWeather.and.returnValue(of(mockWeatherData))
     fixture.detectChanges()
   });
 
   beforeEach(() => {
-    const city = mockCityData
-
-    weatherService.getLocation.and.returnValue(of(mockCityData))
     fixture = TestBed.createComponent(SearchComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -51,17 +51,24 @@ describe('SearchComponent', () => {
   it('should show search results', fakeAsync(() => {
     const searchTerm = "Helsinki"
     const searchBar = fixture.debugElement.query(By.css('[data-test="search-input"]')).nativeElement
+
     expect(searchBar).toBeTruthy()
+    searchBar.dispatchEvent(new Event('focus'))
+    expect(component.isInputFocused).toBeTruthy()
     component.searchInput.setValue(searchTerm)
+    expect(component.searchInput.value).toBe(searchTerm)
 
     fixture.detectChanges()
     tick(300) // wait for debounce on search input
+    expect(weatherServiceSpy.getLocation).toHaveBeenCalledWith(searchTerm)
+    expect(component.cityLocations?.length).toBeGreaterThan(0)
 
-    const searchBarValue = searchBar.value
-    expect(searchBarValue).toEqual(searchTerm)
-    // expect(weatherServiceSpy.)
+    fixture.detectChanges()
 
-    // const searchResults = fixture.debugElement.query(By.css('[data-test="search-results"]')).nativeElement
-    // expect(searchResults).toBeTruthy()
+    const searchResults = fixture.debugElement.query(By.css('[data-test="search-results"]')).nativeElement
+    expect(searchResults).toBeTruthy()
+
+    const resultRows = fixture.debugElement.queryAll(By.css('[data-test="result-row"]'))
+    expect(resultRows.length).toEqual(1)
   }))
 });
