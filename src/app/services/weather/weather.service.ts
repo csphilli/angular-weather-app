@@ -9,7 +9,7 @@ import { WeatherInfo } from "../../weatherinfo"
 })
 export class WeatherService {
 	private weatherBaseApiUrl = "https://api.openweathermap.org/data/2.5/weather?"
-	private geoCodeBaseApiUrl = "http://api.openweathermap.org/geo/1.0/direct?q="
+	private geoCodeBaseApiUrl = "https://api.openweathermap.org/geo/1.0/direct?q="
 	private searchLimit = 10
 
 	getWeather(lat: number, lon: number, unit: string): Observable<WeatherInfo> {
