@@ -1,16 +1,16 @@
-import { TestBed } from '@angular/core/testing';
+import { TestBed } from "@angular/core/testing"
 
-import { IconService } from './icon.service';
+import { IconService } from "./icon.service"
 
-describe('IconService', () => {
-  let service: IconService;
+describe("IconService", () => {
+	let service: IconService
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(IconService);
-  });
+	beforeEach(() => {
+		TestBed.configureTestingModule({})
+		service = TestBed.inject(IconService)
+	})
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
-  });
-});
+	it("should be created", () => {
+		expect(service).toBeTruthy()
+	})
+})
