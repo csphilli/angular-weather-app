@@ -1,8 +1,6 @@
 interface coordType {
-	coord: {
-		lon: string
-		lat: string
-	}
+	lon: number
+	lat: number
 }
 
 interface weatherType {
@@ -19,14 +17,14 @@ interface mainType {
 	humidity: number
 	temp_min: number
 	temp_max: number
-	sea_level: number
-	grnd_level: number
+	sea_level?: number
+	grnd_level?: number
 }
 
 interface windType {
 	speed: number
 	deg: number
-	gust: number
+	gust?: number
 }
 
 interface cloudType {
@@ -41,11 +39,15 @@ interface intervalType {
 interface sysType {
 	sunrise: number
 	sunset: number
+	type: number
+	id: number
+	country: string
 }
 
 export interface WeatherInfo {
 	coord: coordType
 	weather: weatherType[]
+	base: string
 	main: mainType
 	visibility: number
 	wind: windType
@@ -55,5 +57,7 @@ export interface WeatherInfo {
 	dt: number
 	sys: sysType
 	timezone: number
+	id: number
 	name: string
+	cod: number
 }

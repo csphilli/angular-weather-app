@@ -9,6 +9,7 @@
         id="searchInput"
         (focus)="onFocus()"
         (blur)="onBlur()"
+        data-test="search-input"
       />
       <div class="button-group">
         <button [ngClass]="{'active': selectedUnit === 'metric'}" (click)="changeUnit('metric')">&deg;C</button>
@@ -16,9 +17,9 @@
       </div>
     </div>
   </form>
-  <div class="search-results-container" *ngIf="cityLocations && cityLocations.length > 0 && isInputFocused">
+  <div class="search-results-container" data-test="search-results" *ngIf="cityLocations && cityLocations.length > 0 && isInputFocused">
     <ul>
-      <li *ngFor="let cityLocation of cityLocations" (click)="onSelect(cityLocation)">
+      <li data-test="result-row" *ngFor="let cityLocation of cityLocations" (click)="onSelect(cityLocation)">
         {{cityLocation.name}},
         <ng-container *ngIf="cityLocation.state">{{cityLocation.state}},</ng-container>
         {{cityLocation.country}}
