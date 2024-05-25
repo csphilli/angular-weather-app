@@ -118,10 +118,10 @@
 
 @media screen and (max-width: 625px) {
 	.search-bar-container {
-		width: 100%;
+		width: fit-content;
 
 		.search-results-container {
-			width: fit-content;
+			max-width: 200px;
 		}
 	}
 }
