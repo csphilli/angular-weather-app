@@ -119,5 +119,9 @@
 @media screen and (max-width: 625px) {
 	.search-bar-container {
 		width: 100%;
+
+		.search-results-container {
+			width: fit-content;
+		}
 	}
 }

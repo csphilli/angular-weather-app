@@ -35,36 +35,37 @@ export class WeatherComponent implements OnInit, OnDestroy {
     return this.selectedUnit === 'metric' ? "m/s" : "mph"
   }
 
+  // direction is in terms of where wind is coming FROM
   getWindDirection(degree: number): string {
     let direction
 
     switch(true) {
-      case degree >= 0:
-        direction = "S"
-        break
-      case degree >= 22.5:
-        direction = "SW"
-        break
-      case degree >= 67.5:
-        direction = "W"
-        break
-      case degree >= 112.5:
-        direction = "NW"
-        break
-      case degree >= 157.5:
-        direction = "N"
-        break
-      case degree >= 202.5:
-        direction = "NE"
-        break
-      case degree >= 247.5:
+      case degree >= 337.5:
         direction = "E"
         break
       case degree >= 292.5:
         direction = "SE"
         break
-      case degree >= 337.5:
+      case degree >= 247.5:
         direction = "E"
+        break
+      case degree >= 202.5:
+        direction = "NE"
+        break
+      case degree >= 157.5:
+        direction = "N"
+        break
+      case degree >= 112.5:
+        direction = "NW"
+        break
+      case degree >= 67.5:
+        direction = "W"
+        break
+      case degree >= 22.5:
+        direction = "SW"
+        break
+      case degree >= 0:
+        direction = "S"
         break
       default:
         direction = "S"
