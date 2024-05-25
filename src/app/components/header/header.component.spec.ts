@@ -27,13 +27,13 @@ describe('HeaderComponent', () => {
   it(`should have the title`, () => {
     const fixture = TestBed.createComponent(HeaderComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('Today\'s Weather');
+    expect(app.title).toEqual('Your Weather');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(HeaderComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Today\'s Weather');
+    expect(compiled.querySelector('h1')?.textContent).toContain('Your Weather');
   });
 });

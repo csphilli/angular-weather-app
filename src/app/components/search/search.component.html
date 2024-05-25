@@ -1,14 +1,22 @@
 <div class="search-bar-container">
   <form data-test="search-bar">
-    <input
-      type="text"
-      [formControl]="searchInput"
-      placeholder="Enter city..."
-      name="searchBar"
-      id="searchInput"
-    />
+    <div class="search-bar">
+      <input
+        type="text"
+        [formControl]="searchInput"
+        placeholder="Search for a city..."
+        name="searchBar"
+        id="searchInput"
+        (focus)="onFocus()"
+        (blur)="onBlur()"
+      />
+      <div class="button-group">
+        <button [ngClass]="{'active': selectedUnit === 'metric'}" (click)="changeUnit('metric')">&deg;C</button>
+        <button [ngClass]="{'active': selectedUnit === 'imperial'}" (click)="changeUnit('imperial')">&deg;F</button>
+      </div>
+    </div>
   </form>
-  <div class="search-results-container" *ngIf="cityLocations && cityLocations.length > 0">
+  <div class="search-results-container" *ngIf="cityLocations && cityLocations.length > 0 && isInputFocused">
     <ul>
       <li *ngFor="let cityLocation of cityLocations" (click)="onSelect(cityLocation)">
         {{cityLocation.name}},

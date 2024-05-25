@@ -1,51 +1,65 @@
-import { Component, HostListener, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Subject, catchError, debounceTime, distinctUntilChanged, of, switchMap, takeUntil } from 'rxjs';
 import { WeatherService } from '../../services/weather/weather.service';
 import { CityLocation } from '../../citylocation';
-import { NgFor, NgIf } from '@angular/common';
+import { NgClass, NgFor, NgIf } from '@angular/common';
 import { CitySelectorService } from '../../services/citySelector/city-selector.service';
 import { SanitizationService } from '../../services/sanitization/sanitization.service';
+import { UnitService } from '../../services/unit/unit.service';
 
 @Component({
   selector: 'app-search',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, NgIf, NgFor],
+  imports: [FormsModule, ReactiveFormsModule, NgIf, NgFor, NgClass],
   templateUrl: './search.component.html',
   styleUrl: './search.component.scss',
 })
-export class SearchComponent implements OnDestroy {
+export class SearchComponent implements OnDestroy, OnInit {
   searchInput: FormControl = new FormControl('');
+  selectedUnit!: string
   cityLocations: CityLocation[] | null = null;
+  isInputFocused: boolean = false
   private destroy$: Subject<void> = new Subject();
 
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
-  }
 
   clearFormAndCities() {
     this.searchInput.reset();
     this.cityLocations = null;
   }
 
-  @HostListener('document:click', ['$event'])
-  clickout(event: Event) {
-    const searchInput = document.querySelector("#searchInput")
-    if (event.target !== searchInput) {
-      this.clearFormAndCities();
-    }
+  onFocus() {
+    this.isInputFocused = true
+  }
+
+  // if we blur immediately, we can't capture the click on search results
+  onBlur() {
+    setTimeout(() => {
+      this.isInputFocused = false
+    }, 100)
   }
   
   onSelect(city: CityLocation) {
-    this.citySelectorService.selectCity(city);
+    this.citySelectorService.updateSelectedCity(city)
+    this.clearFormAndCities()
   }
 
+  changeUnit(unit: string) {
+    this.unitService.updateSelectedUnit(unit)
+  }
+
+  ngOnInit(): void {
+    this.unitService.selectedUnit$.subscribe(unit => {
+      this.selectedUnit = unit
+    })
+  }
  
   constructor(
     private weatherService: WeatherService,
     private citySelectorService: CitySelectorService,
-    private sanitizationService: SanitizationService) {
+    private sanitizationService: SanitizationService,
+    private unitService: UnitService
+  ) {
     this.searchInput.valueChanges.
     pipe(
       debounceTime(300),
@@ -76,5 +90,10 @@ export class SearchComponent implements OnDestroy {
         this.clearFormAndCities()
       }
     })
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }
