@@ -1,0 +1,29 @@
+<div class="search-bar-container">
+  <form data-test="search-bar">
+    <div class="search-bar">
+      <input
+        type="text"
+        [formControl]="searchInput"
+        placeholder="Search for a city..."
+        name="searchBar"
+        id="searchInput"
+        (focus)="onFocus()"
+        (blur)="onBlur()"
+        data-test="search-input"
+      />
+      <div class="button-group">
+        <button [ngClass]="{'active': selectedUnit === 'metric'}" (click)="changeUnit('metric')">&deg;C</button>
+        <button [ngClass]="{'active': selectedUnit === 'imperial'}" (click)="changeUnit('imperial')">&deg;F</button>
+      </div>
+    </div>
+  </form>
+  <div class="search-results-container" data-test="search-results" *ngIf="cityLocations && cityLocations.length > 0 && isInputFocused">
+    <ul>
+      <li data-test="result-row" *ngFor="let cityLocation of cityLocations" (click)="onSelect(cityLocation)">
+        {{cityLocation.name}},
+        <ng-container *ngIf="cityLocation.state">{{cityLocation.state}},</ng-container>
+        {{cityLocation.country}}
+      </li>
+    </ul>
+  </div>
+</div>

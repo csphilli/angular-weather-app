@@ -1,0 +1,14 @@
+name: Frontend workflow
+
+on:
+  workflow_call:
+
+jobs:
+  call-frontend-e2e-testing:
+    uses: ./.github/workflows/frontend-e2e-testing.yml
+    with:
+      npm-version: 18.x
+  call-frontend-format-check:
+    uses: ./.github/workflows/frontend-format-check.yml
+    with:
+      npm-version: 18.x

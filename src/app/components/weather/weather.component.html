@@ -1,0 +1,65 @@
+<div class="card" *ngIf="weather !== null">
+	<div class="card-heading" data-test="weather-heading">
+		<h2>Weather Today in <em>{{selectedCity.name}}, {{selectedCity.country}}</em></h2>
+	</div>
+	<div class="card-content">
+		<div class="weather-emphasized">
+			<div class="emphasized-column" data-test="feels-like">
+				<p>Feels Like</p>
+				<strong data-test="feels-like-value">{{convertToDecimal(weather.main.feels_like, 0)}}{{degreeUnit}}</strong>
+			</div>
+			<div class="emphasized-column" data-test="weather-description">
+				<app-icon iconName={{weather.weather[0].icon}}></app-icon>
+				<h2 data-test="weather-description-value">{{capitalizeWords(weather.weather[0].description)}}</h2>
+			</div>
+		</div>
+		<div class="weather-metrics">
+			<div class="metrics-column">
+				<div class="metrics-column__row" data-test="hi-low-temps">
+					<span>
+						<app-icon iconName="thermometer"></app-icon>
+						<p>High / Low</p>
+					</span>
+					<p data-test="hi-low-temps-value">{{convertToDecimal(weather.main.temp_max, 0)}}{{degreeUnit}} / {{convertToDecimal(weather.main.temp_min, 0)}}{{degreeUnit}}</p>
+				</div>
+				<div class="metrics-column__row" data-test="humidity">
+					<span>
+						<app-icon iconName="humidity"></app-icon>
+						<p>Humidity</p>
+					</span>
+					<p data-test="humidity-value">{{weather.main.humidity}}%</p>
+				</div>
+				<div class="metrics-column__row" data-test="pressure">
+					<span>
+						<app-icon iconName="pressure"></app-icon>
+						<p>Pressure</p>
+					</span>
+					<p data-test="pressure-value">{{weather.main.pressure}} hPa</p>
+				</div>
+			</div>
+			<div class="metrics-column">
+				<div class="metrics-column__row" data-test="sunrise-sunset-times">
+					<span>
+						<app-icon iconName="sunrise"></app-icon>
+						<app-icon iconName="sunset"></app-icon>
+					</span>
+					<p data-test="sunrise-sunset-times-value">{{convertEpochTime(weather.sys.sunrise + weather.timezone)}} / {{convertEpochTime(weather.sys.sunset + weather.timezone)}}</p>
+				</div>
+				<div class="metrics-column__row" data-test="wind-speed">
+					<span>
+						<app-icon iconName="wind"></app-icon>
+						<p>Wind</p>
+					</span>
+					<p data-test="wind-speed-value">{{getWindDirection(weather.wind.deg)}} {{weather.wind.speed}} {{getWindSpeedUnit()}}</p>
+				</div>
+				<div class="metrics-column__row" data-test="visibility">
+					<span>
+						<app-icon iconName="visibility"></app-icon>
+						<p>Visibility</p>
+					</span>
+					<p data-test="visibility-value">{{convertToDecimal(weather.visibility / 1000, 2)}} km</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
