@@ -2,17 +2,16 @@ import { Component, OnDestroy, OnInit } from "@angular/core"
 import { CitySelectorService } from "../../services/citySelector/city-selector.service"
 import { CityLocation } from "../../citylocation"
 import { Subject, Subscription, takeUntil, combineLatest } from "rxjs"
-import { NgIf } from "@angular/common"
+import { NgIf, DatePipe, DecimalPipe } from "@angular/common"
 import { WeatherService } from "../../services/weather/weather.service"
 import { WeatherInfo } from "../../weatherinfo"
 import { IconComponent } from "../icon/icon.component"
 import { UnitService } from "../../services/unit/unit.service"
-import { useDate } from "../../composables/date"
 
 @Component({
 	selector: "app-weather",
 	standalone: true,
-	imports: [NgIf, IconComponent],
+	imports: [NgIf, IconComponent, DatePipe, DecimalPipe],
 	templateUrl: "./weather.component.html",
 	styleUrl: "./weather.component.scss",
 })
@@ -20,7 +19,6 @@ export class WeatherComponent implements OnInit, OnDestroy {
 	selectedCity!: CityLocation
 	selectedUnit!: string
 	degreeUnit!: string
-	dateHelper: any
 	weather: WeatherInfo | null = null
 	private destroy$: Subject<void> = new Subject()
 	private citySubscription: Subscription = new Subscription()
@@ -73,16 +71,11 @@ export class WeatherComponent implements OnInit, OnDestroy {
 		return direction
 	}
 
-	convertToDecimal(value: number, places: number): number {
-		return parseFloat(value.toFixed(places))
-	}
-
-	convertEpochTime(value: number): string {
-		return this.dateHelper.getTime(value)
+	convertToDate(value: number): Date {
+		return new Date(value * 1000)
 	}
 
 	ngOnInit(): void {
-		this.dateHelper = useDate()
 		combineLatest([this.citySelectorService.selectedCity$, this.unitService.selectedUnit$])
 			.pipe(takeUntil(this.destroy$))
 			.subscribe(([city, unit]) => {

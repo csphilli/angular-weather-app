@@ -6,7 +6,7 @@
 		<div class="weather-emphasized">
 			<div class="emphasized-column" data-test="feels-like">
 				<p>Feels Like</p>
-				<strong data-test="feels-like-value">{{convertToDecimal(weather.main.feels_like, 0)}}{{degreeUnit}}</strong>
+				<strong data-test="feels-like-value">{{weather.main.feels_like | number: '1.0-0'}}{{degreeUnit}}</strong>
 			</div>
 			<div class="emphasized-column" data-test="weather-description">
 				<app-icon iconName={{weather.weather[0].icon}}></app-icon>
@@ -20,7 +20,7 @@
 						<app-icon iconName="thermometer"></app-icon>
 						<p>High / Low</p>
 					</span>
-					<p data-test="hi-low-temps-value">{{convertToDecimal(weather.main.temp_max, 0)}}{{degreeUnit}} / {{convertToDecimal(weather.main.temp_min, 0)}}{{degreeUnit}}</p>
+					<p data-test="hi-low-temps-value">{{weather.main.temp_max | number: '1.0-0'}}{{degreeUnit}} / {{weather.main.temp_min | number: '1.0-0'}}{{degreeUnit}}</p>
 				</div>
 				<div class="metrics-column__row" data-test="humidity">
 					<span>
@@ -43,7 +43,7 @@
 						<app-icon iconName="sunrise"></app-icon>
 						<app-icon iconName="sunset"></app-icon>
 					</span>
-					<p data-test="sunrise-sunset-times-value">{{convertEpochTime(weather.sys.sunrise + weather.timezone)}} / {{convertEpochTime(weather.sys.sunset + weather.timezone)}}</p>
+					<p data-test="sunrise-sunset-times-value">{{convertToDate(weather.sys.sunrise + weather.timezone) | date: 'shortTime':'UTC'}} / {{convertToDate(weather.sys.sunset + weather.timezone) | date: 'shortTime':'UTC'}}</p>
 				</div>
 				<div class="metrics-column__row" data-test="wind-speed">
 					<span>
@@ -57,7 +57,7 @@
 						<app-icon iconName="visibility"></app-icon>
 						<p>Visibility</p>
 					</span>
-					<p data-test="visibility-value">{{convertToDecimal(weather.visibility / 1000, 2)}} km</p>
+					<p data-test="visibility-value">{{(weather.visibility / 1000) | number: '1.0-0'}} km</p>
 				</div>
 			</div>
 		</div>
