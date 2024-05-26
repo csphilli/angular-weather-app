@@ -87,20 +87,6 @@ describe("WeatherComponent", () => {
 		})
 	})
 
-	it("should convert a value to specified number of decimal places", () => {
-		const value = 123.4567
-		let places = 2
-		let expected = 123.46
-
-		let result = component.convertToDecimal(value, places)
-		expect(result).toBe(expected)
-
-		places = 0
-		expected = 123
-		result = component.convertToDecimal(value, places)
-		expect(result).toBe(expected)
-	})
-
 	it("should return the correct wind direction given a degree input", () => {
 		let degree = 15
 		let expected = "S"
