@@ -1,4 +1,4 @@
-import { CityLocation } from "../../citylocation"
+import { CityLocation } from "../../types/citylocation"
 export const mockCityData: CityLocation[] = [
 	{
 		name: "Helsinki",

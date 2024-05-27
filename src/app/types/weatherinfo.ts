@@ -31,11 +31,6 @@ interface cloudType {
 	all: number
 }
 
-interface intervalType {
-	"1h"?: number
-	"3h"?: number
-}
-
 interface sysType {
 	sunrise: number
 	sunset: number
@@ -52,8 +47,6 @@ export interface WeatherInfo {
 	visibility: number
 	wind: windType
 	clouds: cloudType
-	rain?: intervalType
-	snow?: intervalType
 	dt: number
 	sys: sysType
 	timezone: number
