@@ -1,6 +1,6 @@
 <div class="card" *ngIf="weather !== null">
 	<div class="card-heading" data-test="weather-heading">
-		<h2>Weather Today in <em>{{selectedCity.name}}, {{selectedCity.country}}</em></h2>
+		<h2>Weather Today in <em>{{selectedCity.name}}, <ng-container *ngIf="selectedCity.state">{{selectedCity.state}}, </ng-container> {{selectedCity.country}}</em></h2>
 	</div>
 	<div class="card-content">
 		<div class="weather-emphasized">
@@ -9,7 +9,9 @@
 				<strong data-test="feels-like-value">{{weather.main.feels_like | number: '1.0-0'}}{{degreeUnit}}</strong>
 			</div>
 			<div class="emphasized-column" data-test="weather-description">
-				<app-icon iconName={{weather.weather[0].icon}}></app-icon>
+				<div *ngIf="weather && weather.weather.length > 0">
+					<app-icon iconName={{weather.weather[0].icon}}></app-icon>
+				</div>
 				<h2 data-test="weather-description-value">{{capitalizeWords(weather.weather[0].description)}}</h2>
 			</div>
 		</div>

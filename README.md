@@ -7,3 +7,23 @@ Implementation of a weather app built using Angular.
 No previous experience with Angular until this project.
 
 [Weather App](https://cp-angular-weather-app.netlify.app/)
+
+## How to run locally
+
+* Obtain an API key from [Openweathermap](https://openweathermap.org/api).
+* Create a `.env` file in the root of this repository.
+* Set a key value pair of `OPEN_WEATHER_ORG_API_KEY` and your API key.
+* Run `npm install`
+* Run `npm run start`
+* Follow the instructions in stdout to see where you can open your browser to.
+
+## How to run tests
+
+Please note, these instructions have only been verified with Chrome.
+
+Assuming you've already installed the dependencies (`npm install`):
+
+* Run `npm run test`
+* or `ng test`
+
+

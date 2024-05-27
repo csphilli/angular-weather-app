@@ -1,8 +1,8 @@
 import { Injectable } from "@angular/core"
 import { HttpClient } from "@angular/common/http"
 import { Observable } from "rxjs"
-import { CityLocation } from "../../citylocation"
-import { WeatherInfo } from "../../weatherinfo"
+import { CityLocation } from "../../types/citylocation"
+import { WeatherInfo } from "../../types/weatherinfo"
 
 @Injectable({
 	providedIn: "root",

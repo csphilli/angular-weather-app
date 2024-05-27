@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core"
 import { BehaviorSubject } from "rxjs"
-import { CityLocation } from "../../citylocation"
+import { CityLocation } from "../../types/citylocation"
 
 @Injectable({
 	providedIn: "root",
@@ -20,7 +20,11 @@ export class CitySelectorService {
 	private getStoredCity(): CityLocation {
 		const storedCity = localStorage.getItem("city")
 		if (storedCity) {
-			return JSON.parse(storedCity)
+			try {
+				return JSON.parse(storedCity)
+			} catch (error) {
+				console.error("failed to parse saved city. using default.", error)
+			}
 		}
 		return this.defaultCity
 	}

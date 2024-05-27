@@ -1,12 +1,13 @@
 import { Component, OnDestroy, OnInit } from "@angular/core"
 import { CitySelectorService } from "../../services/citySelector/city-selector.service"
-import { CityLocation } from "../../citylocation"
+import { CityLocation } from "../../types/citylocation"
 import { Subject, Subscription, takeUntil, combineLatest } from "rxjs"
 import { NgIf, DatePipe, DecimalPipe } from "@angular/common"
 import { WeatherService } from "../../services/weather/weather.service"
-import { WeatherInfo } from "../../weatherinfo"
+import { WeatherInfo } from "../../types/weatherinfo"
 import { IconComponent } from "../icon/icon.component"
 import { UnitService } from "../../services/unit/unit.service"
+import { Units } from "../../types/units"
 
 @Component({
 	selector: "app-weather",
@@ -30,45 +31,30 @@ export class WeatherComponent implements OnInit, OnDestroy {
 	}
 
 	getWindSpeedUnit() {
-		return this.selectedUnit === "metric" ? "m/s" : "mph"
+		return this.selectedUnit === Units.metric ? "m/s" : "mph"
 	}
 
 	// direction is in terms of where wind is coming FROM
 	getWindDirection(degree: number): string {
-		let direction
-
-		switch (true) {
-			case degree >= 337.5:
-				direction = "E"
-				break
-			case degree >= 292.5:
-				direction = "SE"
-				break
-			case degree >= 247.5:
-				direction = "E"
-				break
-			case degree >= 202.5:
-				direction = "NE"
-				break
-			case degree >= 157.5:
-				direction = "N"
-				break
-			case degree >= 112.5:
-				direction = "NW"
-				break
-			case degree >= 67.5:
-				direction = "W"
-				break
-			case degree >= 22.5:
-				direction = "SW"
-				break
-			case degree >= 0:
-				direction = "S"
-				break
-			default:
-				direction = "S"
+		if (degree >= 337.5) {
+			return "E"
+		} else if (degree >= 292.5) {
+			return "SE"
+		} else if (degree >= 247.5) {
+			return "E"
+		} else if (degree >= 202.5) {
+			return "NE"
+		} else if (degree >= 157.5) {
+			return "N"
+		} else if (degree >= 112.5) {
+			return "NW"
+		} else if (degree >= 67.5) {
+			return "W"
+		} else if (degree >= 22.5) {
+			return "SW"
+		} else {
+			return "S"
 		}
-		return direction
 	}
 
 	convertToDate(value: number): Date {
@@ -81,7 +67,7 @@ export class WeatherComponent implements OnInit, OnDestroy {
 			.subscribe(([city, unit]) => {
 				this.selectedCity = city
 				this.selectedUnit = unit
-				this.degreeUnit = this.selectedUnit === "metric" ? "°C" : "°F"
+				this.degreeUnit = this.selectedUnit === Units.metric ? "°C" : "°F"
 				this.fetchWeather(city, unit)
 			})
 	}

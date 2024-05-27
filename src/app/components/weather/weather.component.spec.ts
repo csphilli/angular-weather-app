@@ -7,6 +7,7 @@ import { mockWeatherData } from "./weather.mock"
 import { mockCityData } from "./citydata.mock"
 import { of } from "rxjs"
 import { WeatherService } from "../../services/weather/weather.service"
+import { Units } from "../../types/units"
 
 describe("WeatherComponent", () => {
 	let component: WeatherComponent
@@ -35,7 +36,7 @@ describe("WeatherComponent", () => {
 
 	beforeEach(() => {
 		const city = mockCityData
-		const unit = "metric"
+		const unit = Units.metric
 
 		weatherService.getWeather.and.returnValue(of(mockWeatherData))
 
@@ -45,7 +46,7 @@ describe("WeatherComponent", () => {
 
 	it("should fetch weather data and updated the component state", () => {
 		const city = mockCityData
-		const unit = "metric"
+		const unit = Units.metric
 
 		expect(component.weather).toEqual(mockWeatherData)
 		expect(weatherService.getWeather).toHaveBeenCalledWith(city[0].lat, city[0].lon, unit)

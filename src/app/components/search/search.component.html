@@ -12,8 +12,8 @@
         data-test="search-input"
       />
       <div class="button-group">
-        <button [ngClass]="{'active': selectedUnit === 'metric'}" (click)="changeUnit('metric')">&deg;C</button>
-        <button [ngClass]="{'active': selectedUnit === 'imperial'}" (click)="changeUnit('imperial')">&deg;F</button>
+        <button [ngClass]="{'active': selectedUnit === units.metric}" (click)="changeUnit(units.metric)">&deg;C</button>
+        <button [ngClass]="{'active': selectedUnit === units.imperial}" (click)="changeUnit(units.imperial)">&deg;F</button>
       </div>
     </div>
   </form>
