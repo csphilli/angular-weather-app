@@ -12,7 +12,7 @@ No previous experience with Angular until this project.
 
 * Obtain an API key from [Openweathermap](https://openweathermap.org/api).
 * Create a `.env` file in the root of this repository.
-* Set a key value pair of `OPEN_WEATHER_ORG_API_KEY` and your API key.
+* Create a key value pair of `OPEN_WEATHER_ORG_API_KEY` and your API key in the `.env` file.
 * Run `npm install`
 * Run `npm run start`
 * Follow the instructions in stdout to see where you can open your browser to.
