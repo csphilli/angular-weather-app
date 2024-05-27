@@ -1,4 +1,4 @@
-import { WeatherInfo } from "../../weatherinfo"
+import { WeatherInfo } from "../../types/weatherinfo"
 export const mockWeatherData: WeatherInfo = {
 	coord: {
 		lon: 24.9353,

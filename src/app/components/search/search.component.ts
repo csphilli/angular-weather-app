@@ -10,10 +10,11 @@ import {
 	takeUntil,
 } from "rxjs"
 import { WeatherService } from "../../services/weather/weather.service"
-import { CityLocation } from "../../citylocation"
+import { CityLocation } from "../../types/citylocation"
 import { NgClass, NgFor, NgIf } from "@angular/common"
 import { CitySelectorService } from "../../services/citySelector/city-selector.service"
 import { UnitService } from "../../services/unit/unit.service"
+import { UnitType, Units } from "../../types/units"
 
 @Component({
 	selector: "app-search",
@@ -24,7 +25,8 @@ import { UnitService } from "../../services/unit/unit.service"
 })
 export class SearchComponent implements OnDestroy, OnInit {
 	searchInput: FormControl = new FormControl("")
-	selectedUnit!: string
+	units = Units
+	selectedUnit: UnitType = Units.metric
 	cityLocations: CityLocation[] | null = null
 	isInputFocused: boolean = false
 	private destroy$: Subject<void> = new Subject()
@@ -50,7 +52,7 @@ export class SearchComponent implements OnDestroy, OnInit {
 		this.clearFormAndCities()
 	}
 
-	changeUnit(unit: string) {
+	changeUnit(unit: UnitType) {
 		this.unitService.updateSelectedUnit(unit)
 	}
 
